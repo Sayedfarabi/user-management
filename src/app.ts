@@ -1,14 +1,13 @@
-import express, { Request, Response, text } from "express";
-import cors from "cors";
-const app = express();
+import express from 'express'
+import cors from 'cors'
+import { UserRoutes } from './app/modules/user/user.route'
+const app = express()
 
 // parser
-app.use(express.json());
-app.use(text());
-app.use(cors());
+app.use(express.json())
+app.use(cors())
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Server side connected");
-});
+// Api Routes
+app.use('/api/users', UserRoutes)
 
-export default app;
+export default app
