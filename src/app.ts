@@ -8,7 +8,7 @@ app.use(text());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.send("Server side connected");
 });
 
 export default app;
