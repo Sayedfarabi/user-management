@@ -5,10 +5,12 @@ const fullNameSchema = new Schema<TFullName>({
   firstName: {
     type: String,
     required: [true, 'First name is required'],
+    trim: true,
   },
   lastName: {
     type: String,
     required: [true, 'Last name is required'],
+    trim: true,
   },
 })
 
@@ -26,21 +28,26 @@ const addressSchema = new Schema<TAddress>({
     required: [true, 'User country property of address is required'],
   },
 })
+
 const userSchema = new Schema<TUser>({
   userId: {
     type: Number,
     required: [true, 'User id is required'],
     unique: true,
     index: true,
+    trim: true,
   },
   username: {
     type: String,
     required: [true, 'User name is required'],
     unique: true,
+    index: true,
+    trim: true,
   },
   password: {
     type: String,
     required: [true, 'User Password is required'],
+    trim: true,
   },
   fullName: {
     type: fullNameSchema,
@@ -49,16 +56,17 @@ const userSchema = new Schema<TUser>({
   age: {
     type: Number,
     required: [true, 'User age is required'],
+    trim: true,
   },
   email: {
     type: String,
     required: [true, 'User email is required'],
-    unique: true,
-    index: true,
+    trim: true,
   },
   isActive: {
     type: Boolean,
     required: [true, 'User isActive field is required'],
+    trim: true,
   },
   hobbies: {
     type: [String],
