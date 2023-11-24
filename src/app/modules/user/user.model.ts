@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { TAddress, TFullName, TUser } from './user.interface'
+import { TAddress, TFullName, TUser, UserModel } from './user.interface'
 import bcrypt from 'bcrypt'
 import config from '../../config'
 
@@ -92,7 +92,13 @@ userSchema.pre('save', async function (next) {
 // post middleware for saved password
 userSchema.post('save', async function (doc, next) {
   doc.password = ''
+
   next()
 })
 
-export const User = model<TUser>('User', userSchema)
+userSchema.statics.isUserExists = async function (userId: number) {
+  const existingUser = await User.findOne({ userId })
+  return existingUser
+}
+
+export const User = model<TUser, UserModel>('User', userSchema)

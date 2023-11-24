@@ -18,6 +18,23 @@ const getUsers = async (req: Request, res: Response) => {
     })
   }
 }
+const getUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId
+    const result = await userServices.getUserFromDB(Number(userId))
+    res.status(200).json({
+      success: true,
+      message: 'User fetched successfully',
+      data: result,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something went wrong',
+    })
+  }
+}
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -41,4 +58,5 @@ const createUser = async (req: Request, res: Response) => {
 export const userControllers = {
   getUsers,
   createUser,
+  getUser,
 }
