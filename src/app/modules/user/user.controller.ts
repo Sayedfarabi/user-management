@@ -26,7 +26,7 @@ const createUser = async (req: Request, res: Response) => {
     const result = await userServices.createUserIntoDB(userZodParseData)
     res.status(200).json({
       success: true,
-      message: 'User created successfully',
+      message: 'User fetched successfully',
       data: result,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
