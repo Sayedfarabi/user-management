@@ -35,6 +35,24 @@ const getUser = async (req: Request, res: Response) => {
     })
   }
 }
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params
+    const userData = req.body
+    const result = await userServices.updateUserFromDB(Number(userId), userData)
+    res.status(200).json({
+      success: true,
+      message: 'User updated successfully!',
+      data: result,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something went wrong',
+    })
+  }
+}
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -59,4 +77,5 @@ export const userControllers = {
   getUsers,
   createUser,
   getUser,
+  updateUser,
 }

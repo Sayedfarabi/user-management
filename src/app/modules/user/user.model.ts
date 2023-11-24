@@ -96,6 +96,12 @@ userSchema.post('save', async function (doc, next) {
   next()
 })
 
+userSchema.post('findOneAndUpdate', async function (doc, next) {
+  doc.password = ''
+
+  next()
+})
+
 userSchema.statics.isUserExists = async function (userId: number) {
   const existingUser = await User.findOne({ userId })
   return existingUser

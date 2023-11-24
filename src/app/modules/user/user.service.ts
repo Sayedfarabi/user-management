@@ -39,6 +39,18 @@ const getUserFromDB = async (userId: number) => {
   }
 }
 
+const updateUserFromDB = async (userId: number, userData: TUser) => {
+  if (await User.isUserExists(userId)) {
+    const filter = {
+      userId: userId,
+    }
+    const result = await User.findOneAndUpdate(filter, userData)
+    return result
+  } else {
+    throw new Error('User is not exists')
+  }
+}
+
 const createUserIntoDB = async (userData: TUser) => {
   if (await User.isUserExists(userData.userId)) {
     throw new Error('User Alredy Exists')
@@ -53,4 +65,5 @@ export const userServices = {
   getAllUserFromDB,
   createUserIntoDB,
   getUserFromDB,
+  updateUserFromDB,
 }
