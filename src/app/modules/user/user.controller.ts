@@ -7,7 +7,7 @@ const getUsers = async (req: Request, res: Response) => {
     const result = await userServices.getAllUserFromDB()
     res.status(200).json({
       success: true,
-      message: 'All user get successfully',
+      message: 'All user get successfully!',
       data: result,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +24,7 @@ const getUser = async (req: Request, res: Response) => {
     const result = await userServices.getUserFromDB(Number(userId))
     res.status(200).json({
       success: true,
-      message: 'User fetched successfully',
+      message: 'User fetched successfully!',
       data: result,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +54,24 @@ const updateUser = async (req: Request, res: Response) => {
   }
 }
 
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params
+    const result = await userServices.deleteUserFromDB(Number(userId))
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
+      data: result,
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something went wrong',
+    })
+  }
+}
+
 const createUser = async (req: Request, res: Response) => {
   try {
     const user = req.body
@@ -61,7 +79,7 @@ const createUser = async (req: Request, res: Response) => {
     const result = await userServices.createUserIntoDB(userZodParseData)
     res.status(200).json({
       success: true,
-      message: 'User fetched successfully',
+      message: 'User fetched successfully!',
       data: result,
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,4 +96,5 @@ export const userControllers = {
   createUser,
   getUser,
   updateUser,
+  deleteUser,
 }

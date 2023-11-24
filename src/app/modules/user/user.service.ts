@@ -51,6 +51,22 @@ const updateUserFromDB = async (userId: number, userData: TUser) => {
   }
 }
 
+const deleteUserFromDB = async (userId: number) => {
+  if (await User.isUserExists(userId)) {
+    const filter = {
+      userId: userId,
+    }
+    const result = await User.deleteOne(filter)
+    // return result
+    if (result.deletedCount > 0) {
+      return null
+    }
+    return result
+  } else {
+    throw new Error('User is not exists')
+  }
+}
+
 const createUserIntoDB = async (userData: TUser) => {
   if (await User.isUserExists(userData.userId)) {
     throw new Error('User Alredy Exists')
@@ -66,4 +82,5 @@ export const userServices = {
   createUserIntoDB,
   getUserFromDB,
   updateUserFromDB,
+  deleteUserFromDB,
 }

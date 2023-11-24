@@ -80,6 +80,13 @@ const userSchema = new Schema<TUser>({
   },
 })
 
+// For delete password property of response data
+userSchema.methods.toJSON = function () {
+  const userObject = this.toObject()
+  delete userObject.password
+  return userObject
+}
+
 // Pre middleware for save password
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
@@ -89,16 +96,8 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
-// post middleware for saved password
-userSchema.post('save', async function (doc, next) {
-  doc.password = ''
-
-  next()
-})
-
-userSchema.post('findOneAndUpdate', async function (doc, next) {
-  doc.password = ''
-
+userSchema.post('deleteOne', async function (doc, next) {
+  doc = null
   next()
 })
 
