@@ -27,6 +27,12 @@ const addressZodValidationSchema = z.object({
   country: z.string().min(1).max(50),
 })
 
+const orderZodValidationSchema = z.object({
+  productName: z.string().min(1),
+  price: z.number().min(1),
+  quantity: z.number().min(1),
+})
+
 const userZodValidationSchema = z.object({
   userId: z.number().int().positive('User id must be a positive integer'),
   username: z.string().min(1).max(50),
@@ -39,6 +45,7 @@ const userZodValidationSchema = z.object({
     .array(z.string().min(1).max(50))
     .min(1, 'User must have at least one hobby'),
   address: addressZodValidationSchema,
+  orders: z.array(orderZodValidationSchema).optional(),
 })
 
 export default userZodValidationSchema
